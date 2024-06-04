@@ -9,7 +9,6 @@ const UserDashboard = () => {
     const [error, setError] = useState(null);
     let { userId } = useParams();
 
-  
     useEffect(() => {
       const fetchUserData = async () => {
         try {
@@ -18,6 +17,7 @@ const UserDashboard = () => {
           throw new Error('Network response was not ok');
         }
         const data = await response.json();
+        console.log(data)
         setUserData(data);
         setLoading(false);
       } catch (err) {

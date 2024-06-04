@@ -48,6 +48,11 @@ return (
             <p>{post.title}</p>
             <p>{post.content}</p>
             <p>Author: {post.user && post.user.username}</p>
+            {post.isPublished ? (
+                <p>Published</p>
+            ) : (
+                <p>Unpublished</p>
+            )}
             <button onClick={handleEdit}>Edit</button>
             <button onClick={handleDelete}>Delete</button>
             <ul>

@@ -6,6 +6,7 @@ export default function EditPost(){
     const [postContent, setPostContent] = useState('');
     let { postId } = useParams();
     const navigate = useNavigate();
+    let userId = localStorage.getItem('userId')
 
     useEffect(() => {
         const getPost = async () => {
@@ -35,13 +36,21 @@ export default function EditPost(){
 
     const handleEdit = async (event) => {
         event.preventDefault();
-        const updatedPost = { title: postTitle, content: postContent }
+        const updatedPost = { title: postTitle, content: postContent, user: userId }
 
         try {
+          const token = localStorage.getItem('token'); // Retrieve token from local storage
+          if (!token) {
+            console.error('No token found');
+            localStorage.removeItem('token');
+            navigate('/')
+            return;
+          }
             const response = await fetch(`http://localhost:3000/posts/${postId}`, {
               method: 'PUT',
               headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`, // Attach token to the request
               },
               body: JSON.stringify(updatedPost),
             });
