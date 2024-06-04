@@ -6,6 +6,11 @@ import AllPosts from "./routes/allPosts";
 import Post from "./routes/post";
 import Root from "./routes/root";
 import Signup from "./routes/signup";
+import User from "./routes/user"
+import CreatePost from "./routes/createPost";
+import EditPost from "./routes/editPost";
+import DeletePost from "./routes/deletePost";
+
 
 
 const router = createBrowserRouter([
@@ -25,6 +30,23 @@ const router = createBrowserRouter([
     path: "posts/:postId",
     element: <Post />,
   },
+  {
+    path: "posts/:postId/edit",
+    element: <EditPost />,
+  },
+  {
+    path: "posts/:postId/delete",
+    element: <DeletePost />,
+  },
+  {
+    path: "users/:userId",
+    element: <User />,
+  },
+  {
+    path: "users/:userId/create",
+    element: <CreatePost />,
+  },
+
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
