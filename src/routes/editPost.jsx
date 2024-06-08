@@ -4,6 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 export default function EditPost(){
     const [postTitle, setPostTitle] = useState('');
     const [postContent, setPostContent] = useState('');
+    const [isPublished, setIsPublished] = useState(false)
     let { postId } = useParams();
     const navigate = useNavigate();
     let userId = localStorage.getItem('userId')
@@ -24,6 +25,7 @@ export default function EditPost(){
               if (response.ok) {
                 setPostTitle(data.title)
                 setPostContent(data.content)
+                setIsPublished(data.isPublished)
               } else {
                 console.log('update failed', data);
               }
@@ -36,7 +38,7 @@ export default function EditPost(){
 
     const handleEdit = async (event) => {
         event.preventDefault();
-        const updatedPost = { title: postTitle, content: postContent, user: userId }
+        const updatedPost = { title: postTitle, content: postContent, user: userId, isPublished: isPublished }
 
         try {
           const token = localStorage.getItem('token'); // Retrieve token from local storage
@@ -65,9 +67,11 @@ export default function EditPost(){
             }
           } catch (error) {
             console.error('Error:', error);
-          }
-        };
-
+        }
+    };
+    function handlePublished(){
+      setIsPublished(!isPublished)
+    }
       return (
         <form onSubmit={handleEdit}>
         <div>
@@ -87,6 +91,15 @@ export default function EditPost(){
             value={postContent}
             onChange={(e) => setPostContent(e.target.value)}
             required
+          />
+        </div>
+        <div>
+        <label htmlFor="isPublished">Published:</label>
+          <input
+            type="checkbox"
+            id="isPublished"
+            checked={isPublished}
+            onChange={handlePublished}
           />
         </div>
         <button type="submit">Save Post</button>

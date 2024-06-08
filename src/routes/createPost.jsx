@@ -4,6 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 export default function CreatePost(){
     const [postTitle, setPostTitle] = useState('');
     const [postContent, setPostContent] = useState('');
+    const [isPublished, setIsPublished] = useState(false)
     let userId = localStorage.getItem('userId')
     const navigate = useNavigate();
 
@@ -15,7 +16,7 @@ export default function CreatePost(){
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const postData = { title: postTitle, content: postContent, user: userId }; 
+        const postData = { title: postTitle, content: postContent, user: userId, isPublished: isPublished}; 
     
         try {
           const token = localStorage.getItem('token'); // Retrieve token from local storage
@@ -47,6 +48,10 @@ export default function CreatePost(){
           console.error('Error:', error);
         }
       };
+
+    function handlePublished(){
+      setIsPublished(!isPublished)
+    }
     return (
         <form onSubmit={handleSubmit}>
         <div>
@@ -66,6 +71,14 @@ export default function CreatePost(){
             value={postContent}
             onChange={(e) => setPostContent(e.target.value)}
             required
+          />
+        </div>
+        <div>
+        <label htmlFor="isPublished">Published:</label>
+          <input
+            type="checkbox"
+            id="isPublished"
+            onChange={handlePublished}
           />
         </div>
         <button type="submit">Create Post</button>

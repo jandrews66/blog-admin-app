@@ -1,23 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 
-const LoginForm = () => {
+const LoginForm = ({ setUserId }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [loading, setLoading] = useState(true);
+
 
     const navigate = useNavigate();
-
-    useEffect(() => {
-        const token = localStorage.getItem('token');
-        if (token) {
-            setIsAuthenticated(true);
-        } else {
-            setIsAuthenticated(false)
-        }
-        setLoading(false);
-    }, []);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -38,8 +27,7 @@ const LoginForm = () => {
         console.log('Login successful', data);
         localStorage.setItem('token', data.token)
         localStorage.setItem('userId', data.user._id)
-
-        setIsAuthenticated(true)
+        setUserId(data.user._id); // Update the userId in the parent component
         navigate(`/users/${data.user._id}`)
 
         } else {
@@ -48,24 +36,16 @@ const LoginForm = () => {
         }
   };
 
-  const handleLogout = () => {
+/*   const handleLogout = () => {
     localStorage.removeItem('token');
+    localStorage.removeItem('userId');
     setIsAuthenticated(false)
     navigate('/')
-  }
+  } */
 
-  if (loading) {
-    return <div>Loading...</div>; // Show 'loading' while checking authentication status
-  }
 
   return (
     <div>
-        {isAuthenticated ? (
-            <div>
-                <p>You are already logged in</p>
-                <button onClick={handleLogout}>Logout</button>
-            </div>
-        ) : (
             <form onSubmit={handleSubmit}>
             <div>
                 <label htmlFor="username">Username:</label>
@@ -92,8 +72,6 @@ const LoginForm = () => {
                 Not an author? <Link to={`/signup`}>Sign up</Link>
             </p>
             </form>
-            
-        )}
 
     </div>
 
