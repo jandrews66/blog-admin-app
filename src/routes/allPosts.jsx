@@ -25,7 +25,7 @@ return (
             <Link to={`/posts/${post._id}`} className="text-xl font-semibold text-blue-500 hover:underline">
               {post.title}
             </Link>
-            <p className="text-gray-700 mt-2">{post.content}</p>
+            <p className="text-gray-700 mt-2 line-clamp-4">{post.content}</p>
             <p className="text-gray-500 mt-4">Posted by: {post.user.username}</p>
           </li>
         ))}
