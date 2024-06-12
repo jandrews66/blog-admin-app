@@ -4,7 +4,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AllPosts from "./routes/allPosts";
 import Post from "./routes/post";
 import Signup from "./routes/signup";
-import User from "./routes/user"
+import User from "./routes/userDashboard"
 import CreatePost from "./routes/createPost";
 import EditPost from "./routes/editPost";
 import DeletePost from "./routes/deletePost";

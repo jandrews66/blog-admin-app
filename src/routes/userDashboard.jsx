@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import AllPosts from './allPosts'
 
 
@@ -37,17 +37,26 @@ const UserDashboard = () => {
       return <div>Error: {error.message}</div>;
     }
     
-    const postList = userData.posts.map(post => <li key={post._id}>{post.title}</li>)
+    const postList = userData.posts.map(post => (
+      <li key={post._id} className="bg-white p-6 border-2 border-slate-300 rounded-xl shadow-md max-w-md mx-auto">
+        <Link to={`/posts/${post._id}`} className="text-xl font-semibold text-blue-500 hover:underline">
+          {post.title}
+        </Link>        
+        <p className="text-gray-700 mt-2">{post.content}</p>
+      </li>
+    ));
+
     return (
-      <div>
-        <h1>User Dashboard</h1>
+      <div className="container mx-auto px-4 py-8">
+        <h1 className="text-3xl font-bold mb-4 text-center">User Dashboard</h1>
         {userData && (
           <div>
-            <p>Hello {userData.user.first_name}</p>
+            <p className="text-xl font-semibold text-center py-6">Hello {userData.user.first_name}</p>
           </div>
         )}
-        {postList}
-        <AllPosts />
+        <ul className="space-y-4">
+          {postList}
+        </ul>
       </div>
     );
   };

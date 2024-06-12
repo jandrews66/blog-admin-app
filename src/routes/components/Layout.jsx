@@ -1,6 +1,7 @@
 import { Outlet, Link, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import LoginForm from './LoginForm';
+import '../../index.css'
 
 const Layout = () => {
   const [userId, setUserId] = useState(null);
@@ -25,21 +26,24 @@ const Layout = () => {
       {userId === null ? (
         <LoginForm setUserId={setUserId} />
     ) : (
-        <nav>
-          <ul>
+        <nav className="bg-slate-400 flex items-center justify-between p-4">
+          <ul className="flex space-x-4">
             <li>
-              <Link to={`/users/${userId}`}>My Posts</Link>
+              <Link className="text-black hover:underline" to={`/users/${userId}`}>My Posts</Link>
             </li>
             <li>
-              <Link to="/posts">All Posts</Link>
+              <Link className="text-black hover:underline" to="/posts">All Posts</Link>
             </li>
             <li>
-              <Link to="/posts/create">Create Post</Link>
-            </li>
-            <li>
-              <button onClick={handleLogout}>Logout</button>
+              <Link className="text-black hover:underline" to="/posts/create">Create Post</Link>
             </li>
           </ul>
+          <button
+            className="text-black hover:underline"
+            onClick={handleLogout}
+          >
+            Logout
+          </button>
         </nav>
       )}
       <main>

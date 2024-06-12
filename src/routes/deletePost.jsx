@@ -37,9 +37,23 @@ export default function DeletePost() {
   };
 
   return (
-    <div>
-      <p>Are you sure you want to delete this post?</p>
-      <button onClick={handleDelete}>Confirm</button>
+    <div className="container mx-auto px-8 py-8">
+      <div className="bg-white p-6 border-2 border-slate-300 rounded-xl shadow-md mx-auto max-w-fit">
+        <p className="py-4">Are you sure you want to delete this post?</p>
+        <div className="flex justify-evenly py-2">
+          <button 
+            className="border-2 border-slate-300 hover:bg-slate-300 text-slate-600 font-bold py-2 px-4 rounded"
+
+            onClick={() => navigate(-1)}>Go Back
+            </button>
+          <button 
+            className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+            onClick={handleDelete}>Confirm
+          </button>
+        </div>
+
+      </div>
+
     </div>
   );
 }

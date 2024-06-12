@@ -72,37 +72,45 @@ export default function EditPost(){
     function handlePublished(){
       setIsPublished(!isPublished)
     }
-      return (
-        <form onSubmit={handleEdit}>
-        <div>
-          <label htmlFor="postTitle">Title:</label>
-          <input
-            type="text"
-            id="postTitle"
-            value={postTitle}
-            onChange={(e) => setPostTitle(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="postContent">Content:</label>
-          <textarea
-            id="postContent"
-            value={postContent}
-            onChange={(e) => setPostContent(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-        <label htmlFor="isPublished">Published:</label>
-          <input
-            type="checkbox"
-            id="isPublished"
-            checked={isPublished}
-            onChange={handlePublished}
-          />
-        </div>
-        <button type="submit">Save Post</button>
-      </form>
-      )
+
+return (
+  <div className="flex justify-center items-center h-screen bg-gray-100">
+    <form onSubmit={handleEdit} className="bg-white p-8 rounded-lg shadow-md w-full max-w-4xl h-3/4 flex flex-col">
+      <h2 className="text-2xl font-bold mb-6 text-center">Create a New Post</h2>
+      <div className="mb-4">
+        <label htmlFor="postTitle" className="block text-gray-700 mb-2">Title:</label>
+        <input
+          type="text"
+          id="postTitle"
+          value={postTitle}
+          onChange={(e) => setPostTitle(e.target.value)}
+          required
+          className="w-full p-2 border border-gray-300 rounded"
+        />
+      </div>
+      <div className="mb-10 flex-1">
+        <label htmlFor="postContent" className="block text-gray-700">Content:</label>
+        <textarea
+          id="postContent"
+          value={postContent}
+          onChange={(e) => setPostContent(e.target.value)}
+          required
+          className="w-full p-2 border border-gray-300 rounded h-full"
+        />
+      </div>
+      <div className="mb-4 flex items-center">
+        <label htmlFor="isPublished" className="text-gray-700 mr-2">Published:</label>
+        <input
+          type="checkbox"
+          id="isPublished"
+          checked={isPublished}
+          onChange={handlePublished}
+          className="form-checkbox h-5 w-5 text-blue-600"
+        />
+      </div>
+      <button type="submit" className=" bg-blue-500 text-white p-2 rounded hover:bg-blue-600 transition duration-200 px-4 max-w-fit">Save Post</button>
+    </form>
+  </div>
+
+)
 }
