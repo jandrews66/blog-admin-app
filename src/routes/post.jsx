@@ -43,6 +43,39 @@ export default function AllPosts() {
         navigate(`${location.pathname}/delete`);
 
     }
+
+    const handleCommentDelete = async (commentId) =>{
+      console.log("delete" + commentId)
+
+      try {
+        const token = localStorage.getItem('token'); // Retrieve token from local storage
+        if (!token) {
+          console.error('No token found');
+          localStorage.removeItem('token');
+          navigate('/')
+          return;
+        }
+  
+        const response = await fetch(`http://localhost:3000/posts/${postId}/comments/${commentId}`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`, // Attach token to the request
+          },
+        });
+  
+        const data = await response.json();
+  
+        if (response.ok) {
+           // Remove deleted comment from state
+          setComments(comments.filter(comment => comment._id !== commentId));
+        } else {
+          console.log('Post deletion failed', data);
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    }
 return (
     <div className="container mx-auto px-4 py-8">
     <h2 className="text-3xl font-bold mb-4 text-center">Post</h2>
@@ -67,12 +100,18 @@ return (
           Delete
         </button>
       </div>
+      <hr className="py-2"></hr>
       <h3 className="text-xl font-bold mb-4">Comments</h3>
       <ul className="space-y-4">
         {comments.map((comment) => (
-          <li key={comment._id} className="bg-gray-100 p-4 rounded-lg shadow-inner">
+          <li key={comment._id} className="bg-gray-100 p-4 rounded-lg shadow-inner flex flex-col">
             <p className="font-semibold">{comment.name}</p>
             <p className="text-gray-700">{comment.message}</p>
+            <button 
+              onClick={() => handleCommentDelete(comment._id)}
+              className="mt-2 text-red-500 hover:text-red-700 ml-auto font-light"
+              >
+              Remove</button>
           </li>
         ))}
       </ul>
