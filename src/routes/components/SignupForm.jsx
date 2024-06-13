@@ -7,6 +7,7 @@ const SignupForm = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [errors, setErrors] = useState([]);
   const navigate = useNavigate();
 
 
@@ -37,9 +38,12 @@ const SignupForm = () => {
         navigate('/')
       } else {
         console.log('Signup failed', data);
+        setErrors(data.errors || [{msg: 'An error has occured'}])
       }
     } catch (error) {
       console.error('Error:', error);
+      setErrors([{ msg: 'An unexpected error occurred. Please try again.' }]);
+
     }
   };
 
@@ -102,6 +106,15 @@ const SignupForm = () => {
           />
         </div>
         <button type="submit" className=" bg-blue-500 text-white p-2 rounded hover:bg-blue-600 transition duration-200 px-4 mb-4 max-w-fit">Sign Up</button>
+        {errors.length > 0 && (
+          <div className="mb-4">
+            {errors.map((error, index) => (
+              <div key={index} className="text-red-500 text-sm mb-2">
+                {error.msg}
+              </div>
+            ))}
+          </div>
+        )}
       </form>
     </div>
 

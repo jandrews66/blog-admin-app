@@ -4,7 +4,7 @@ import { useNavigate, Link } from 'react-router-dom';
 const LoginForm = ({ setUserId }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-
+    const [errors, setErrors] = useState([])
 
     const navigate = useNavigate();
 
@@ -33,15 +33,9 @@ const LoginForm = ({ setUserId }) => {
         } else {
         // Handle login error
         console.log('Login failed', data);
+        setErrors([{msg: data.message}] || [{ msg: 'An error occurred' }])
         }
   };
-
-/*   const handleLogout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('userId');
-    setIsAuthenticated(false)
-    navigate('/')
-  } */
 
 
   return (
@@ -70,6 +64,15 @@ const LoginForm = ({ setUserId }) => {
                 />
             </div>
             <button type="submit" className=" bg-blue-500 text-white p-2 rounded hover:bg-blue-600 transition duration-200 px-4 mb-4 max-w-fit">Login</button>
+            {errors.length > 0 && (
+            <div className="mb-4">
+                {errors.map((error, index) => (
+                <div key={index} className="text-red-500 text-sm mb-2">
+                    {error.msg}
+                </div>
+                ))}
+            </div>
+            )}
             <p className="text-gray-700">
                 Not an author? <Link to={`/signup`} className="text-blue-700">Sign up</Link>
             </p>

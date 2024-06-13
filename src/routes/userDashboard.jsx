@@ -38,23 +38,33 @@ const UserDashboard = () => {
     }
     
     const postList = userData.posts.map(post => (
-      <li key={post._id} className="bg-white p-6 border-2 border-slate-300 rounded-xl shadow-md max-w-md mx-auto">
+      <li key={post._id} className="bg-white p-6 border-2 border-slate-300 rounded-xl shadow-md w-full sm:w-full md:w-1/2 lg:w-1/2 max-w-[350px]">
         <Link to={`/posts/${post._id}`} className="text-xl font-semibold text-blue-500 hover:underline">
           {post.title}
-        </Link>        
-        <p className="text-gray-700 mt-2 line-clamp-4">{post.content}</p>
+        </Link>
+        {post.img && (
+                        <img 
+                          src={`http://localhost:3000/images/${post.img}`} 
+                          alt={post.title} 
+                          className="w-full mt-4 rounded-md"
+                        />
+                      )}      
+        <p className="text-gray-700 mt-2 line-clamp-5">{post.content}</p>
+              <p className={`mt-4 ${post.isPublished ? 'text-green-500' : 'text-red-500'}`}>
+                {post.isPublished ? 'Published' : 'Unpublished'}
+              </p>
       </li>
     ));
 
     return (
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-8 py-8 max-w-[1000px] ">
         <h1 className="text-3xl font-bold mb-4 text-center">User Dashboard</h1>
         {userData && (
           <div>
             <p className="text-xl font-semibold text-center py-6">Hello {userData.user.first_name}</p>
           </div>
         )}
-        <ul className="space-y-4">
+        <ul className="flex flex-wrap justify-center -mx-4 gap-5">
           {postList}
         </ul>
       </div>

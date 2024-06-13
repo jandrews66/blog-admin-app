@@ -6,6 +6,7 @@ export default function EditPost(){
     const [postContent, setPostContent] = useState('');
     const [isPublished, setIsPublished] = useState(false)
     const [postImg, setPostImg] = useState(null)
+    const [existingImg, setExistingImg] = useState('');
     let { postId } = useParams();
     const navigate = useNavigate();
     let userId = localStorage.getItem('userId')
@@ -27,6 +28,7 @@ export default function EditPost(){
                 setPostTitle(data.title)
                 setPostContent(data.content)
                 setIsPublished(data.isPublished)
+                setExistingImg(data.img);
               } else {
                 console.log('update failed', data);
               }
@@ -46,6 +48,8 @@ export default function EditPost(){
         formData.append('isPublished', isPublished);
         if (postImg) {
             formData.append('img', postImg); // Append image if it exists
+        } else {
+            formData.append('existingImg', existingImg); // Append existing image filename
         }
 
         try {

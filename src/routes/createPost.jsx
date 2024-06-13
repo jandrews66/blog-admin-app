@@ -25,7 +25,9 @@ export default function CreatePost(){
         formData.append('isPublished', isPublished);
         if (postImg) {
           formData.append('img', postImg);
-      }
+        } else {
+          formData.append('img', 'placeholder-image.jpeg'); 
+        }
 
         try {
           const token = localStorage.getItem('token'); // Retrieve token from local storage
