@@ -25,8 +25,21 @@ return (
             <Link to={`/posts/${post._id}`} className="text-xl font-semibold text-blue-500 hover:underline">
               {post.title}
             </Link>
+            {post.img && (
+                            <img 
+                                src={`http://localhost:3000/images/${post.img}`} 
+                                alt={post.title} 
+                                className="w-full mt-4 rounded-md"
+                            />
+                        )}
             <p className="text-gray-700 mt-2 line-clamp-4">{post.content}</p>
-            <p className="text-gray-500 mt-4">Posted by: {post.user.username}</p>
+            <div className="flex justify-between">
+              <p className="text-gray-500 mt-4">Posted by: {post.user.username}</p>
+              <p className={`mt-4 ${post.isPublished ? 'text-green-500' : 'text-red-500'}`}>
+                {post.isPublished ? 'Published' : 'Unpublished'}
+              </p>
+            </div>
+
           </li>
         ))}
       </ul>

@@ -4,6 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 export default function CreatePost(){
     const [postTitle, setPostTitle] = useState('');
     const [postContent, setPostContent] = useState('');
+    const [postImg, setPostImg] = useState(null);
     const [isPublished, setIsPublished] = useState(false)
     let userId = localStorage.getItem('userId')
     const navigate = useNavigate();
@@ -16,8 +17,16 @@ export default function CreatePost(){
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const postData = { title: postTitle, content: postContent, user: userId, isPublished: isPublished}; 
-    
+        //FormData needed to append both text and file inputs
+        const formData = new FormData();
+        formData.append('title', postTitle);
+        formData.append('content', postContent);
+        formData.append('user', userId);
+        formData.append('isPublished', isPublished);
+        if (postImg) {
+          formData.append('img', postImg);
+      }
+
         try {
           const token = localStorage.getItem('token'); // Retrieve token from local storage
           if (!token) {
@@ -29,10 +38,9 @@ export default function CreatePost(){
           const response = await fetch(`http://localhost:3000/posts`, {
             method: 'POST',
             headers: {
-              'Content-Type': 'application/json',
               'Authorization': `Bearer ${token}`, // Attach token to the request
             },
-            body: JSON.stringify(postData),
+            body: formData,
           });
     
           const data = await response.json();
@@ -52,6 +60,7 @@ export default function CreatePost(){
     function handlePublished(){
       setIsPublished(!isPublished)
     }
+
     return (
       <div className="flex justify-center items-center h-screen bg-gray-100">
         <form onSubmit={handleSubmit} className="bg-white p-8 rounded-lg shadow-md w-full max-w-4xl h-3/4 flex flex-col">
@@ -85,6 +94,15 @@ export default function CreatePost(){
               onChange={handlePublished}
               className="form-checkbox h-5 w-5 text-blue-600"
             />
+          </div>
+          <div className="mb-4">
+            <label htmlFor="postImg" className="block text-gray-700 mb-2">Image:</label>
+            <input 
+                type="file" 
+                accept=".png, .jpg, .jpeg"
+                name="photo"
+                onChange={(e) => setPostImg(e.target.files[0])}
+                />
           </div>
           <button type="submit" className=" bg-blue-500 text-white p-2 rounded hover:bg-blue-600 transition duration-200 px-4 max-w-fit">Create Post</button>
         </form>

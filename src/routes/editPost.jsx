@@ -5,6 +5,7 @@ export default function EditPost(){
     const [postTitle, setPostTitle] = useState('');
     const [postContent, setPostContent] = useState('');
     const [isPublished, setIsPublished] = useState(false)
+    const [postImg, setPostImg] = useState(null)
     let { postId } = useParams();
     const navigate = useNavigate();
     let userId = localStorage.getItem('userId')
@@ -38,7 +39,14 @@ export default function EditPost(){
 
     const handleEdit = async (event) => {
         event.preventDefault();
-        const updatedPost = { title: postTitle, content: postContent, user: userId, isPublished: isPublished }
+        const formData = new FormData();
+        formData.append('title', postTitle);
+        formData.append('content', postContent);
+        formData.append('user', userId);
+        formData.append('isPublished', isPublished);
+        if (postImg) {
+            formData.append('img', postImg); // Append image if it exists
+        }
 
         try {
           const token = localStorage.getItem('token'); // Retrieve token from local storage
@@ -51,10 +59,9 @@ export default function EditPost(){
             const response = await fetch(`http://localhost:3000/posts/${postId}`, {
               method: 'PUT',
               headers: {
-                'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`, // Attach token to the request
               },
-              body: JSON.stringify(updatedPost),
+              body: formData,
             });
       
             const data = await response.json();
@@ -108,6 +115,16 @@ return (
           className="form-checkbox h-5 w-5 text-blue-600"
         />
       </div>
+      <div className="mb-4">
+                    <label htmlFor="postImg" className="block text-gray-700 mb-2">Image:</label>
+                    <input
+                        type="file"
+                        accept=".png, .jpg, .jpeg"
+                        name="photo"
+                        onChange={(e) => setPostImg(e.target.files[0])}
+                        className="w-full p-2 border border-gray-300 rounded"
+                    />
+                </div>
       <button type="submit" className=" bg-blue-500 text-white p-2 rounded hover:bg-blue-600 transition duration-200 px-4 max-w-fit">Save Post</button>
     </form>
   </div>
