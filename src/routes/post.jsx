@@ -12,7 +12,7 @@ export default function AllPosts() {
 
 
     useEffect(() => {
-        fetch(`http://localhost:3000/posts/${postId}`, {                
+        fetch(`https://dazzling-elemental-airplane.glitch.me/posts/${postId}`, {                
             mode: "cors",
             dataType: 'json',
          })
@@ -24,7 +24,7 @@ export default function AllPosts() {
     }, []);
 
     useEffect(() => {
-        fetch(`http://localhost:3000/posts/${postId}/comments`, {                
+        fetch(`https://dazzling-elemental-airplane.glitch.me/posts/${postId}/comments`, {                
             mode: "cors",
             dataType: 'json',
          })
@@ -56,7 +56,7 @@ export default function AllPosts() {
           return;
         }
   
-        const response = await fetch(`http://localhost:3000/posts/${postId}/comments/${commentId}`, {
+        const response = await fetch(`https://dazzling-elemental-airplane.glitch.me/posts/${postId}/comments/${commentId}`, {
           method: 'DELETE',
           headers: {
             'Content-Type': 'application/json',

@@ -15,7 +15,7 @@ export default function EditPost(){
         const getPost = async () => {
     
             try {
-              const response = await fetch(`http://localhost:3000/posts/${postId}`, {
+              const response = await fetch(`https://dazzling-elemental-airplane.glitch.me/posts/${postId}`, {
                 method: 'GET',
                 headers: {
                   'Content-Type': 'application/json',
@@ -60,7 +60,7 @@ export default function EditPost(){
             navigate('/')
             return;
           }
-            const response = await fetch(`http://localhost:3000/posts/${postId}`, {
+            const response = await fetch(`https://dazzling-elemental-airplane.glitch.me/posts/${postId}`, {
               method: 'PUT',
               headers: {
                 'Authorization': `Bearer ${token}`, // Attach token to the request

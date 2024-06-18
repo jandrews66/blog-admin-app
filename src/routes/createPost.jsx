@@ -37,7 +37,7 @@ export default function CreatePost(){
             navigate('/')
             return;
           }
-          const response = await fetch(`http://localhost:3000/posts`, {
+          const response = await fetch(`https://dazzling-elemental-airplane.glitch.me/posts`, {
             method: 'POST',
             headers: {
               'Authorization': `Bearer ${token}`, // Attach token to the request

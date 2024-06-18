@@ -12,7 +12,7 @@ const LoginForm = ({ setUserId }) => {
         event.preventDefault();
         const loginData = { username, password };
 
-        const response = await fetch('http://localhost:3000', {
+        const response = await fetch('https://dazzling-elemental-airplane.glitch.me', {
             method: 'POST',
             headers: {
             'Content-Type': 'application/json'
