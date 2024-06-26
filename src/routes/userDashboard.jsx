@@ -1,7 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import AllPosts from './allPosts'
-
 
 const UserDashboard = () => {
     const [userData, setUserData] = useState(null);
@@ -30,31 +28,38 @@ const UserDashboard = () => {
     }, [userId]);
   
     if (loading) {
-      return <div>Loading...</div>;
+      return <div className="text-center m-4">Loading...</div>;
     }
   
     if (error) {
       return <div>Error: {error.message}</div>;
     }
     
-    const postList = userData.posts.map(post => (
-      <li key={post._id} className="bg-white p-6 border-2 border-slate-300 rounded-xl shadow-md w-full sm:w-full md:w-1/2 lg:w-1/2 max-w-[350px]">
-        <Link to={`/posts/${post._id}`} className="text-xl font-semibold text-blue-500 hover:underline">
-          {post.title}
-        </Link>
-        {post.img && (
-                        <img 
-                          src={post.img} 
-                          alt={post.title} 
-                          className="w-full mt-4 rounded-md"
-                        />
-                      )}      
-        <p className="text-gray-700 mt-2 line-clamp-5">{post.content}</p>
-              <p className={`mt-4 ${post.isPublished ? 'text-green-500' : 'text-red-500'}`}>
-                {post.isPublished ? 'Published' : 'Unpublished'}
-              </p>
-      </li>
-    ));
+    const postList = userData?.posts?.length > 0 ? (
+      userData.posts.map(post => (
+        <li key={post._id} className="bg-white p-6 border-2 border-slate-300 rounded-xl shadow-md w-full sm:w-full md:w-1/2 lg:w-1/2 max-w-[350px]">
+          <Link to={`/posts/${post._id}`} className="text-xl font-semibold text-blue-500 hover:underline">
+            {post.title}
+          </Link>
+          {post.img && (
+            <img 
+              src={post.img} 
+              alt={post.title} 
+              className="w-full max-h-48 object-cover mt-4 rounded-md"
+            />
+          )}
+          <p className="text-gray-700 mt-2 line-clamp-5">{post.content}</p>
+          <p className={`mt-4 ${post.isPublished ? 'text-green-500' : 'text-red-500'}`}>
+            {post.isPublished ? 'Published' : 'Unpublished'}
+          </p>
+        </li>
+      ))
+    ) : (
+      <div className="text-center">
+        <p>You have not created any posts yet.</p> 
+        <p><Link to="/posts/create" className="text-blue-500 hover:underline">Create a post</Link></p>
+      </div>
+    );
 
     return (
       <div className="container mx-auto px-8 py-8 max-w-[1000px] ">

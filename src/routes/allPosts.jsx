@@ -30,7 +30,7 @@ export default function AllPosts() {
                               <img 
                                   src={post.img} 
                                   alt={post.title} 
-                                  className="w-full mt-4 rounded-md"
+                                  className="w-full max-h-48 object-cover mt-4 rounded-md"
                               />
                           )}
                           <p className="text-gray-700 mt-2 line-clamp-5">{post.content}</p>
