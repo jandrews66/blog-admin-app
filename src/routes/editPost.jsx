@@ -11,12 +11,12 @@ export default function EditPost(){
     let { postId } = useParams();
     const navigate = useNavigate();
     let userId = localStorage.getItem('userId')
-    
+
     useEffect(() => {
         const getPost = async () => {
     
             try {
-              const response = await fetch(`http://localhost:3000/posts/${postId}`, {
+              const response = await fetch(`https://dazzling-elemental-airplane.glitch.me/posts/${postId}`, {
                 method: 'GET',
                 headers: {
                   'Content-Type': 'application/json',

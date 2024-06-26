@@ -8,7 +8,7 @@ export default function CommentForm({ postId, setComments }) {
     event.preventDefault();
     
     try {
-      const response = await fetch(`http://localhost:3000/posts/${postId}/comments`, {
+      const response = await fetch(`https://dazzling-elemental-airplane.glitch.me/posts/${postId}/comments`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

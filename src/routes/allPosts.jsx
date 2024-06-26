@@ -5,7 +5,7 @@ export default function AllPosts() {
     const [posts, setPosts] = useState([]);
 
     useEffect(() => {
-        fetch("http://localhost:3000/posts", {                
+        fetch("https://dazzling-elemental-airplane.glitch.me/posts", {                
             mode: "cors",
             dataType: 'json',
          })

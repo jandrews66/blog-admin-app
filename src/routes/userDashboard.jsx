@@ -12,7 +12,7 @@ const UserDashboard = () => {
     useEffect(() => {
       const fetchUserData = async () => {
         try {
-        const response = await fetch(`http://localhost:3000/users/${userId}`);
+        const response = await fetch(`https://dazzling-elemental-airplane.glitch.me/users/${userId}`);
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
