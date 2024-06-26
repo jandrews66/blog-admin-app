@@ -5,14 +5,16 @@ const LoginForm = ({ setUserId }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [errors, setErrors] = useState([])
+    const [loading, setLoading] = useState(false)
 
     const navigate = useNavigate();
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        setLoading(true)
         const loginData = { username, password };
 
-        const response = await fetch('https://dazzling-elemental-airplane.glitch.me', {
+        const response = await fetch('http://localhost:3000', {
             method: 'POST',
             headers: {
             'Content-Type': 'application/json'
@@ -28,12 +30,14 @@ const LoginForm = ({ setUserId }) => {
         localStorage.setItem('token', data.token)
         localStorage.setItem('userId', data.user._id)
         setUserId(data.user._id); // Update the userId in the parent component
+        setLoading(false)
         navigate(`/users/${data.user._id}`)
 
         } else {
         // Handle login error
         console.log('Login failed', data);
         setErrors([{msg: data.message}] || [{ msg: 'An error occurred' }])
+        setLoading(false)
         }
   };
 
@@ -50,6 +54,7 @@ const LoginForm = ({ setUserId }) => {
                 onChange={(e) => setUsername(e.target.value)}
                 required
                 className="w-full p-2 border border-gray-300 rounded"
+                disabled={loading}
                 />
             </div>
             <div className="mb-4">
@@ -61,9 +66,15 @@ const LoginForm = ({ setUserId }) => {
                 onChange={(e) => setPassword(e.target.value)}
                 required
                 className="w-full p-2 border border-gray-300 rounded"
+                disabled={loading}
                 />
             </div>
-            <button type="submit" className=" bg-blue-500 text-white p-2 rounded hover:bg-blue-600 transition duration-200 px-4 mb-4 max-w-fit">Login</button>
+            <button 
+                type="submit" 
+                className=" bg-blue-500 text-white p-2 rounded hover:bg-blue-600 transition duration-200 px-4 mb-4 max-w-fit"
+            >
+                {loading ? 'Loading...' : 'Login'}
+            </button>
             {errors.length > 0 && (
             <div className="mb-4">
                 {errors.map((error, index) => (

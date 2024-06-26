@@ -5,7 +5,7 @@ export default function AllPosts() {
     const [posts, setPosts] = useState([]);
 
     useEffect(() => {
-        fetch("https://dazzling-elemental-airplane.glitch.me/posts", {                
+        fetch("http://localhost:3000/posts", {                
             mode: "cors",
             dataType: 'json',
          })
@@ -28,7 +28,7 @@ export default function AllPosts() {
                           </Link>
                           {post.img && (
                               <img 
-                                  src={`https://dazzling-elemental-airplane.glitch.me/images/${post.img}`} 
+                                  src={post.img} 
                                   alt={post.title} 
                                   className="w-full mt-4 rounded-md"
                               />

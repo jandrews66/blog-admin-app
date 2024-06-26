@@ -7,6 +7,7 @@ export default function CreatePost(){
     const [postImg, setPostImg] = useState(null);
     const [isPublished, setIsPublished] = useState(false)
     let userId = localStorage.getItem('userId')
+    const [saving, setSaving] = useState(false)
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -17,6 +18,7 @@ export default function CreatePost(){
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        setSaving(true)
         //FormData needed to append both text and file inputs
         const formData = new FormData();
         formData.append('title', postTitle);
@@ -25,10 +27,7 @@ export default function CreatePost(){
         formData.append('isPublished', isPublished);
         if (postImg) {
           formData.append('img', postImg);
-        } else {
-          formData.append('img', 'placeholder-image.jpeg'); 
         }
-
         try {
           const token = localStorage.getItem('token'); // Retrieve token from local storage
           if (!token) {
@@ -37,7 +36,7 @@ export default function CreatePost(){
             navigate('/')
             return;
           }
-          const response = await fetch(`https://dazzling-elemental-airplane.glitch.me/posts`, {
+          const response = await fetch(`http://localhost:3000/posts`, {
             method: 'POST',
             headers: {
               'Authorization': `Bearer ${token}`, // Attach token to the request
@@ -56,6 +55,8 @@ export default function CreatePost(){
           }
         } catch (error) {
           console.error('Error:', error);
+        } finally {
+          setSaving(false)
         }
       };
 
@@ -76,6 +77,7 @@ export default function CreatePost(){
               onChange={(e) => setPostTitle(e.target.value)}
               required
               className="w-full p-2 border border-gray-300 rounded"
+              disabled={saving} 
             />
           </div>
           <div className="mb-10 flex-1">
@@ -86,6 +88,7 @@ export default function CreatePost(){
               onChange={(e) => setPostContent(e.target.value)}
               required
               className="w-full p-2 border border-gray-300 rounded h-full"
+              disabled={saving} 
             />
           </div>
           <div className="mb-4 flex items-center">
@@ -95,6 +98,7 @@ export default function CreatePost(){
               id="isPublished"
               onChange={handlePublished}
               className="form-checkbox h-5 w-5 text-blue-600"
+              disabled={saving} 
             />
           </div>
           <div className="mb-4">
@@ -104,9 +108,17 @@ export default function CreatePost(){
                 accept=".png, .jpg, .jpeg"
                 name="photo"
                 onChange={(e) => setPostImg(e.target.files[0])}
+                required
+                disabled={saving} 
                 />
           </div>
-          <button type="submit" className=" bg-blue-500 text-white p-2 rounded hover:bg-blue-600 transition duration-200 px-4 max-w-fit">Create Post</button>
+          <button 
+            type="submit" 
+            className=" bg-blue-500 text-white p-2 rounded hover:bg-blue-600 transition duration-200 px-4 max-w-fit"
+            disabled={saving} 
+          >
+          {saving ? 'Saving...' : 'Create Post'}
+          </button>
         </form>
       </div>
     );
